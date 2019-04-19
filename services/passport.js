@@ -14,8 +14,18 @@ passport.use(new GoogleStrategy(
 		},
 		(accessToken, refreshToken, profile, done) => {
 			console.log('Received auth');
-
-			new User({ googleId : profile.id }).save();
+			User.findOne({googleId: profile.id }).then(existingUser => {
+				if (existingUser) {
+					console.log('User already exists');
+					done(null, existingUser);
+					// do nothing
+				} else {
+					new User({ googleId : profile.id })
+						.save()
+						.then(user => done(null, User));
+					console.log('Added new user');
+				}
+			});
 		}
 	)
 );
