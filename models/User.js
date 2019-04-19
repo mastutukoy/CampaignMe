@@ -5,5 +5,7 @@ const userSchema = new Schema({
 	googleId: String
 });
 
+console.log('model started');
+
 mongoose.model('users', userSchema);
 

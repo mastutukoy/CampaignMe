@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
-require('./services/passport');
+// declare models first before it is being used 
 require('./models/User');
+require('./services/passport');
 const authRoutes = require('./routes/authRoutes');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI,{useNewUrlParser: true});
 
 const app = express();
 
