@@ -5,6 +5,17 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
 
+passport.serializeUser((user, done) => {
+	console.log('Serializing user')
+	done(null, user.id);
+});
+
+
+passport.deserializeUser((id, done) => {
+	User.findById(id).then(user => {
+		done(null, user);
+	});
+});
 
 passport.use(new GoogleStrategy(
 		{
@@ -16,8 +27,8 @@ passport.use(new GoogleStrategy(
 			console.log('Received auth');
 			User.findOne({googleId: profile.id }).then(existingUser => {
 				if (existingUser) {
-					console.log('User already exists');
 					done(null, existingUser);
+					console.log('User already exists');
 					// do nothing
 				} else {
 					new User({ googleId : profile.id })
