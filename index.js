@@ -6,7 +6,7 @@ const keys = require('./config/keys');
 // declare models first before it is being used 
 require('./models/User');
 require('./services/passport');
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authroutes');
 
 
 mongoose.connect(keys.mongoURI);
